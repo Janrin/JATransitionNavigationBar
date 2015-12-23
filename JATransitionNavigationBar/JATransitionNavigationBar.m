@@ -32,12 +32,12 @@
                        context:(void *)context {
     UIScrollView *transitionScrollView = objc_getAssociatedObject(self, kKeyScrollView);
     CGFloat transitionOffset = [objc_getAssociatedObject(self, kKeyOffset) floatValue];
-    CGFloat offset = transitionScrollView.contentOffset.y - transitionOffset;
-    CGFloat alpha = offset / kFullNavigationBarHeight + 1.f;
-    alpha = MIN(1, MAX(0, alpha));
+    CGFloat offset = transitionScrollView.contentOffset.y;
+    CGFloat alpha = offset / transitionOffset;
+    self.hidden = alpha < 0;
+    alpha = MIN(0.99, MAX(0, alpha));
     UIColor *barTintColor = self.barTintColor;
     if (!barTintColor) {
-        NSLog(@"%@", @(self.barStyle));
         switch (self.barStyle) {
             case UIBarStyleDefault: {
                 barTintColor = [UIColor whiteColor];
@@ -61,7 +61,7 @@
     CGRect rect = CGRectMake(0, 0, size.width, size.height);
     UIGraphicsBeginImageContext(rect.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(context,color.CGColor);
+    CGContextSetFillColorWithColor(context, color.CGColor);
     CGContextFillRect(context, rect);
     UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

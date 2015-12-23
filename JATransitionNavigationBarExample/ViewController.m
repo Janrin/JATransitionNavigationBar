@@ -17,7 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.navigationController.navigationBar convertToTransitionBar:self.tableView useOffset:100.f];
+    [self.navigationController.navigationBar convertToTransitionBar:self.tableView useOffset:50.f];
 }
 
 - (void)didReceiveMemoryWarning {
